@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const isFalsy = (value: any) => value === 0 ? false : !value
+export const isFalsy = (value: unknown) => value === 0 ? false : !value
 export const cleanObject = (object: object) => {
     const result = {...object}
     Object.keys(result).forEach(key => {
@@ -21,8 +21,10 @@ export const useMount= (callback: () => void) => {
 }
 
 // ?意思可以不传
-export const useDebounce = (value: any, delay?: number) => {
+// 泛型<V>
+export const useDebounce = <V>(value: V, delay?: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value)
+    
 
     useEffect(() => {
         const timeout = setTimeout(() => setDebouncedValue(value), delay)
@@ -31,3 +33,18 @@ export const useDebounce = (value: any, delay?: number) => {
 
     return debouncedValue
 }
+
+// export const useArray = <T>(initiallArray: T[]) => {
+//     const [value, setValue] = useState(initiallArray)
+//     return{
+//         value,
+//         setValue,
+//         add: (item: T) => setValue([...value, item]),
+//         clear: () => setValue([]),
+//         removeIndex: (index: number) => {
+//             const copy = [...value]
+//             copy.splice(index, 1)
+//             setValue(copy)
+//         }
+//     }
+// }
